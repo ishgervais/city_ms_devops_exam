@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import rw.ac.rca.termOneExam.domain.City;
+import rw.ac.rca.termOneExam.dto.CreateCityDTO;
 import rw.ac.rca.termOneExam.service.CityService;
 
 import java.util.Objects;
@@ -55,14 +56,17 @@ public class CityControllerIntegrationTest {
 
     }
 
+
     @Test
-    public void create_testFailureNameDuplicated() {
-        City city = new City(1l, "Karongi", 20);
-        ResponseEntity<String> response = testRestTemplate.postForEntity("/api/cities/add", city, String.class);
-//        System.out.println( response.getBody());
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Name already taken", response.getBody());
+    public void createCity_notFound() {
+        CreateCityDTO dto = new CreateCityDTO("Karongi",20);
+
+        ResponseEntity<City> response = this.testRestTemplate.postForEntity("/api/cities/add", dto, City.class);
+
+        assertEquals(201, response.getStatusCodeValue());
+//        assertEquals(dto, response.getBody());
     }
+
 
 
 }
