@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -50,18 +51,17 @@ public class CityServiceTest {
     }
 
     @Test
-    public void save_success() {
+    public void create_testSuccess() {
+        when(cityRepositoryMock.save(any(City.class))).thenReturn(new City("Musanze", 24));
         CreateCityDTO dto = new CreateCityDTO();
         dto.setName("Kigali");
-        dto.setWeather(24);
-        City city = new City(dto.getName(), dto.getWeather());
-        when(cityRepositoryMock.save(city)).thenReturn(city);
-        City createCity = cityService.save(dto);
-        assertTrue(createCity.getName() == "Kigali");
+        dto.setWeather(38);
+        assertEquals("Musanze", cityService.save(dto).getName());
+        assertEquals(24, cityService.save(dto).getWeather());
     }
 
     @Test
-    public void existsByName_test() {
+    public void existsByName_testSuccess() {
         when(cityRepositoryMock.existsByName(anyString())).thenReturn(true);
         assertTrue(cityService.existsByName("Musanze"));
     }
