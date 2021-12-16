@@ -1,9 +1,6 @@
 package rw.ac.rca.termOneExam.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 public class City {
@@ -36,6 +33,13 @@ public class City {
 		this.name = name;
 		this.weather = weather;
 		this.fahrenheit = fahrenheit;
+	}
+
+	public City(long id, String name, double weather) {
+		this.id = id;
+		this.name = name;
+		this.weather = weather;
+
 	}
 
 
